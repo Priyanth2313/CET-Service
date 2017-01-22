@@ -1,0 +1,80 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="data_insertion" %>
+<%@ plsql parameter="pd_areacode" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_first3digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_last4digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_cellphoneprovider" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="pd_subscription" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="pd_submit" type="VARCHAR2" default="NULL" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Subscriber Activation</title>
+<style>
+	p1
+	{
+	fontsize:35;
+	}
+	p2
+	{
+	fontsize:35;
+	}
+header {
+    background-color:#c90000;
+    color:white;
+    text-align:center;
+    padding:2px; 
+}
+nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:500px;
+    width:100px;
+    float:left;
+    padding:8px; 
+}
+section {
+	position:relative;
+	background-color: #fff;
+    width:900px;
+    float:left;
+    padding:30px; 
+}
+footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:10px; 
+}
+</style>
+</head>
+<header>
+<h1>NJIT</h1>
+</header>
+
+<nav>
+<a href="signmeup">Go back</a>
+</nav>
+
+<section>
+<body>
+<p1><centre> Thank You! <br> You have successfully subscribed to the NJIT <br> Text-Message Emergency Alerts Service.<br><br>Have a nice day.</centre></p1>
+	<br><p2><centre><a href="signmeup">Go back</a></centre></p2>        
+<% END IF; %>
+<% ELSIF pd_subscription = 'unsubscribe'
+     THEN
+       UPDATE ADBMS_FINAL SET STATUS = 'UNSUBSCRIBED' WHERE PHONENUM = PHONE AND CARRIER = pd_cellphoneprovider;
+       DELETE FROM ADBMS_FINAL WHERE STATUS='UNSUBSCRIBED';
+         COMMIT;
+%>
+	<p3> Thank You!<br> You have successfully unsubscribed from NJIT's<br> Text-Message Emergency Alerts Service.<br><br>Have a nice day.</p3>
+	<br><p4><a href="signmeup">Go back</a></p4>
+<% END IF; %>
+</section>
+
+<footer>
+Copyright© pd272| New Jersey Institute of Technology | CS632 Advanced Database Management Systems | Professor Hassadi Assadipour
+</footer>
+</body>
+</html>
