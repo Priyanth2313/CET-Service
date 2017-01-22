@@ -1,0 +1,61 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="data_insertion" %>
+<%@ plsql parameter="pd_areacode" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_first3digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_last4digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_cellphoneprovider" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="pd_subscription" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="pd_submit" type="VARCHAR2" default="NULL" %>
+<!DOCTYPE html>
+<html>
+<%! PHONE NUMBER(10) := (((pd_areacode*1000) + pd_first3digits)*10000 + pd_last4digits); %>
+<% IF pd_subscription = 'subscribe'
+     THEN
+         IF ((LENGTH(pd_areacode) < 3 or pd_areacode = NULL) 
+		 or (LENGTH(pd_first3digits) < 3 or pd_first3digits = NULL) 
+		 or (LENGTH(pd_last4digits) < 4) or pd_last4digits = NULL) 
+             THEN 
+                 NULL; 
+                        %>
+<script>
+alert("PLEASE ENTER THE DATA IN THE CORRECT FORMAT!");
+</script>
+    <% ELSE  
+        INSERT INTO ADBMS_FINAL (PHONENUM, CARRIER, STATUS) VALUES (PHONE, pd_cellphoneprovider, 'SUBSCRIBED'); 
+            COMMIT;
+                   %>
+<head>
+	<title>Subscriber Activation</title>
+<style>
+	html{ text-align:center }
+	body {
+    display: inline-block;
+    margin: 0px auto;
+    text-align: center;
+	}
+
+	p1
+	{
+		fontsize:35;
+	}
+	p2
+	{
+		fontsize:35;
+	}
+</style>
+</head>
+<body>
+	<p1> Thank You! <br> You have successfully subscribed to the NJIT <br> Text-Message Emergency Alerts Service.<br><br>Have a nice day.</p1>
+	<br><p2><a href="signmeup">Go back</a></p2>
+<% END IF; %>
+<% ELSIF pd_subscription = 'unsubscribe'
+     THEN
+       UPDATE ADBMS_FINAL SET STATUS = 'UNSUBSCRIBED' WHERE PHONENUM = PHONE AND CARRIER = pd_cellphoneprovider;
+       DELETE FROM ADBMS_FINAL WHERE STATUS='UNSUBSCRIBED';
+         COMMIT;
+%>
+	<p3><centre> Thank You!<br> You have successfully unsubscribed from NJIT's<br> Text-Message Emergency Alerts Service.<br><br>Have a nice day.<centre></p3>
+	<br><p4><centre><a href="signmeup">Go back</a></centre></p4>
+<% END IF; %>
+</body>
+</html>

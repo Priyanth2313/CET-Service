@@ -1,0 +1,56 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="subscriber_data" %>
+<%@ plsql parameter="pd_areacode" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_first3digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_last4digits" type="NUMBER" default="NULL" %>
+<%@ plsql parameter="pd_cellphoneprovider" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="pd_submit" type="VARCHAR2" default="NULL" %>
+<%! CURSOR cero IS SELECT PHONENUM, CARRIER, STATUS from ADBMS_FINAL WHERE STATUS = 'UNSUBSCRIBED';  %>
+<html>
+<head>
+<title>Subscribers List</title>
+<style>
+html{ 
+	text-align:center
+ }
+ 
+body {
+    display: inline-block;
+    margin: 0px auto;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th
+{
+  fontsize:20;
+}
+td
+{
+  fontsize:15;
+}
+</style>
+</head>
+<body>
+<h1> List of Subscribers </h1>
+<table border="0" cellspacing="25">
+         <tr>
+              <th> Phone Number </th>
+			  <th> Carrier </th>
+			  <th> Status </th>
+          </tr>
+<% FOR data in cero LOOP %>
+<tr>
+<td><%= data.phonenum %></td>
+<td><%= data.carrier %></td>
+<td><%= data.status %></td>
+</tr>
+<% END LOOP; %>
+</table>
+<br><br>
+<p><a href="signmeup">Go back</a></p>
+</body>
+</html>     

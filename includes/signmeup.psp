@@ -1,0 +1,148 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="signmeup" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign Up for NJIT Text-Message Emergency Alerts</title>
+	
+	 <script type="text/javascript">
+     
+      function validateForm(){
+        var areacode = document.getElementById("areacode").value;
+        var first3digits = document.getElementById("first3digits").value;
+        var last4digits = document.getElementById("last4digits").value;
+        var number = areacode+first3digits+last4digits+"";
+        var mycode = /^\d{3}$/;
+        if (areacode == null || areacode == "") {
+            alert("Area Code properly cannot be empty");
+            return false;
+        }
+        if(!/^\d{3}$/.test(areacode)){
+          alert("Area Code must be 3 digit number");
+          return false;
+        }
+        
+        if (first3digits == null || first3digits == "") {
+            alert("First three Digits properly cannot be empty");
+            return false;
+        }
+        if(!/^\d{3}$/.test(first3digits)){
+          alert("First three digit must be 3 numbers");
+          return false;
+        }
+
+        if (last4digits == null || last4digits == "") {
+            alert("Last four digits cannot be empty");
+            return false;
+        }
+        if(!/^\d{4}$/.test(third)){
+          alert("Last Four digits must be 4 numbers");
+          return false;
+        }
+        //document.getElementById("form").submit();
+        return true;
+      }
+    </script>
+<style>
+h1
+{
+	font-size:40px;
+	font-family:"Times New Roman", Times;
+}
+p 
+{ 
+        font-size:18px;  
+        font-family:"Times New Roman", Times;
+        font-style:normal; 
+ }
+
+header {
+    background-color:#c90000;
+    color:white;
+    text-align:center;
+    padding:2px; 
+}
+nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:500px;
+    width:100px;
+    float:left;
+    padding:8px; 
+}
+section {
+	position:relative;
+	background-color: #fff;
+    width:900px;
+    float:left;
+    padding:30px; 
+}
+footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:10px; 
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>NJIT</h1>
+</header>
+
+<nav>
+<script type="text/javascript">
+function confirm_alert(node) {
+   return confirm("Nothing is FREE in this world, with great hardwork comes great websites.");
+}
+</script>
+<a href="signmeup" onclick="return confirm_alert(this);">Signup for Free</a>
+</nav>
+
+<section>
+<h1>Sign Up for NJIT Text-Message Emergency Alerts</h1>
+		<p>To receive NJIT Text-Message Emergency Alerts enter your <strong>cell phone number</strong>, select your <strong>cell phone carrier</strong> select <strong>"Subscribe"</strong> from Subscription Activation Selection and click the <strong>"Submit"</strong> button. You can cancel this service at any time by selecting <strong>"Unsubscribe"</strong>.</p>
+
+	<form name="form" action="data_insertion" method="post">
+	<table>
+		<tr><td>Area Code: </td> 
+			<td><input type="text" name="pd_areacode" id="areacode" size="3" maxlength="3"/></td>
+		</tr>
+		<tr><td>First 3 Digits: </td> 
+			<td><input type="text" name="pd_first3digits" id="first3digits" size="3" maxlength="3"/></td>
+		</tr>
+		<tr><td>Last 4 Digits: </td> 
+			<td><input type="text" name="pd_last4digits" id="last4digits" size="4" maxlength="4"/></td>
+		</tr>
+		<tr><td>Cell Phone Provider:</td>
+		<td><select name="pd_cellphoneprovider" id="cellphoneprovider">
+			<option name="Lyca">Lyca Mobile</option>
+			<option name="UltraMobile">UltraMobile</option>
+			<option name="Verizon">Verizon</option>
+			<option name="AT&T">AT&T</option>
+			<option name="TMobile">Sprint</option>
+			<option name="T-Mobile">T-Mobile</option>
+		</select></td>
+		</tr>
+		<tr>
+		<td valign="top">Subscription Activation Selection: </td>
+		<td align="left"><input type="radio" name="pd_subscription" value="subscribe">Subscribe</td>
+		<td align="left"><input type="radio" name="pd_subscription" value="unsubscribe">Unsubscribe</td>
+		</tr>
+		<tr><td><input type="submit" onclick="return validateForm()" name="pd_submit" value="Submit"/>&nbsp; &nbsp;<input type="reset" name="pd_reset"/></td></tr> 
+	</table>
+</form>
+<br>
+<p><a href="subscriber_data">See Subscribers</a></p>
+
+</section>
+
+<footer>
+Copyright© pd272| New Jersey Institute of Technology | CS632 Advanced Database Management Systems | Professor Hassadi Assadipour
+</footer>
+
+</body>
+</html>
